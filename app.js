@@ -3,6 +3,8 @@ const taquitosContainer = document.getElementById('taquitos-container');
 
 const btnPostTaco = document.getElementById('btn-post-taco');
 
+const tacosOptions = document.getElementById('taco-option');
+
 const tacoForm = {
     name: document.getElementById('taco-name'),
     quantity: document.getElementById('taco-quantity'),
@@ -17,7 +19,6 @@ btnPostTaco.onclick = ()=>{
     }
 
     AddTaquito(taco);
-    //console.log(taco);
 };
 
 const GetTaquitos = ()=>{
@@ -26,6 +27,7 @@ const GetTaquitos = ()=>{
     .then(data => data.json())
     .then(tacos => {
         taquitosContainer.innerHTML = '';
+        tacosOptions.innerHTML = '';
         tacos.forEach(taco => {
             const tacoElement = document.createElement('div');
             const tacoName = document.createElement('h3');
@@ -39,6 +41,11 @@ const GetTaquitos = ()=>{
             btnDeleteTaco.onclick = ()=>{
                 DeleteTaquito(id);
             }
+
+            const tacoOption = document.createElement('option');
+            tacoOption.value = id;
+            tacoOption.innerHTML = name;
+            tacosOptions.appendChild(tacoOption);
 
             tacoQuantity.innerHTML = `cantidad: ${quantity}`;
             tacoSpyciness.innerHTML = `¿Es picante?: ${pica}`;
@@ -98,21 +105,6 @@ const DeleteTaquito = id =>{
 };
 
 GetTaquitos();
-
-/*GetTaquitos();
-GetTaquito(2);
-
-const showChanges = async ()=>{
-    await AddTaquito({
-        name: 'canasta',
-        quantity: 3,
-        pica: 'si'
-    });
-    
-    GetTaquitos();
-}
-
-showChanges();*/
 
 /*UpdateTaquito(1, {
     name: 'costillita',
